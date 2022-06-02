@@ -1,6 +1,5 @@
 package me.adrjan.mtbot.captcha.impl;
 
-import lombok.SneakyThrows;
 import me.adrjan.mtbot.bot.BotFrame;
 import me.adrjan.mtbot.bot.BotRobot;
 import me.adrjan.mtbot.captcha.DetectorWrapper;
@@ -18,11 +17,8 @@ public class AluneDetector extends DetectorWrapper {
         super(frame, robot);
     }
 
-    @SneakyThrows
     @Override
-    public Optional<BufferedImage> isCaptcha() {
-        Rectangle rectangle = new Rectangle(getFrame().getX(), getFrame().getY(), getFrame().getWidth(), getFrame().getHeight());
-        BufferedImage bufferedImage = getRobot().createScreenCapture(rectangle);
+    public Optional<BufferedImage> resolve(BufferedImage bufferedImage) {
         int count = ColorUtil.countColor(bufferedImage, COLOR);
         return count > 30 ? Optional.of(bufferedImage) : Optional.empty();
     }
